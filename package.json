@@ -1,0 +1,33 @@
+{
+  "name": "chordlens",
+  "version": "1.0.0",
+  "description": "Chord detection for 88-key piano",
+  "author": "steph-dm",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steph-dm/ChordLens.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./chord-analyzer.js",
+    "./notes": "./notes.js",
+    "./symbols": "./symbols.js",
+    "./templates": "./templates.js"
+  },
+  "main": "chord-analyzer.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node test.js",
+    "demo": "node demo.js"
+  },
+  "keywords": [
+    "music",
+    "chord",
+    "piano",
+    "detection",
+    "harmony"
+  ]
+}
