@@ -33,7 +33,9 @@
     "test:browser": "node scripts/browser-check.js",
     "test:package": "node scripts/package-check.js",
     "typecheck": "tsc -p tsconfig.types.json",
-    "check": "npm test && npm run typecheck && npm run test:package",
+    "docs:chords": "node scripts/generate-catalogue.js",
+    "test:docs": "node scripts/check-docs.js",
+    "check": "npm test && npm run typecheck && npm run test:docs && npm run test:package",
     "prepublishOnly": "npm run check",
     "benchmark": "node scripts/benchmark.js",
     "demo": "node examples/demo.js"
