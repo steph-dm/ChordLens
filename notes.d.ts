@@ -1,0 +1,18 @@
+import type { ParsedNote, PlayedNote } from './chord-analyzer.js';
+export const NOTES_SHARP: readonly string[];
+export const NOTES_FLAT: readonly string[];
+export const LETTERS: readonly string[];
+export const LETTER_TO_PITCH: Readonly<Record<string, number>>;
+export function mod12(n: number): number;
+export function normalizeAccidentals(text: unknown, expandX?: boolean): string;
+export function parseNote(name: unknown): ParsedNote | null;
+export function noteToMidi(name: string, octave: number): number | null;
+export function parsePitch(value: unknown): PlayedNote | null;
+export function midiToNote(midi: number, useFlats?: boolean, spelling?: string): PlayedNote;
+export function noteNames(flat?: boolean): readonly string[];
+export function rootName(pitch: number, flat?: boolean): string | undefined;
+export function rootLetterIndex(pitch: number, flat?: boolean): number;
+export function parseInterval(label: unknown): { degree: number; alteration: number; semitones: number } | null;
+export function spellNote(rootLetterIdx: number, targetPitch: number, label: string): string;
+export function spellChordNote(root: string | ParsedNote, label: string): string;
+export function popcount(n: number): number;

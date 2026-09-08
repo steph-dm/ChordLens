@@ -10,17 +10,26 @@
   },
   "type": "module",
   "exports": {
-    ".": "./chord-analyzer.js",
-    "./notes": "./notes.js",
-    "./symbols": "./symbols.js",
-    "./templates": "./templates.js"
+    ".": { "types": "./chord-analyzer.d.ts", "import": "./chord-analyzer.js" },
+    "./notes": { "types": "./notes.d.ts", "import": "./notes.js" },
+    "./symbols": { "types": "./symbols.d.ts", "import": "./symbols.js" },
+    "./templates": { "types": "./templates.d.ts", "import": "./templates.js" }
   },
   "main": "chord-analyzer.js",
+  "types": "chord-analyzer.d.ts",
+  "sideEffects": false,
+  "files": [
+    "chord-analyzer.js", "chord-analyzer.d.ts", "notes.js", "notes.d.ts",
+    "symbols.js", "symbols.d.ts", "templates.js", "templates.d.ts", "template-utils.js",
+    "harmony.js", "voicings.js", "options.js",
+    "README.md", "CHANGELOG.md", "docs/", "LICENSE"
+  ],
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "test": "node tests/regression.js && node --test tests/*.test.js",
+    "typecheck": "tsc -p tsconfig.types.json",
     "demo": "node examples/demo.js"
   },
   "keywords": [
@@ -29,5 +38,8 @@
     "piano",
     "detection",
     "harmony"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "7.0.2"
+  }
 }
