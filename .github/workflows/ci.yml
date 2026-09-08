@@ -13,6 +13,10 @@ jobs:
         node: ['22.0.0', 24]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        # Node 22.0.0's npm.ps1 can resolve npm to a nonexistent global prefix.
+        shell: bash
     steps:
       - uses: actions/checkout@v7
         with:
