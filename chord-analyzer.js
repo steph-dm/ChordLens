@@ -2,8 +2,9 @@ import { parseNote, parsePitch, noteToMidi, midiToNote, mod12, popcount, spellCh
 import { normalizeSymbol, parseChordSymbol } from './symbols.js';
 import { TEMPLATES } from './templates.js';
 import { compileTemplate } from './template-utils.js';
-import { parseKey, contextName } from './harmony.js';
+import { parseKey, contextName, analyzeHarmony } from './harmony.js';
 import { objectOptions, integer, boolean, choice } from './options.js';
+import { createVoicings } from './voicings.js';
 
 const DEFAULTS = Object.freeze({
   useFlats: false,
@@ -398,7 +399,22 @@ export class ChordAnalyzer {
       requiredIntervals: t.required.map(iv => t.labels[iv]) }));
   }
 
+  generateVoicings(chordName, options = {}) {
+    const chord = this.parseChord(chordName, { order: 'degree' });
+    if (!chord) throw new RangeError(`Unsupported chord: ${String(chordName)}`);
+    return createVoicings(chord, options);
+  }
 
+  analyzeProgression(chords, options = {}) {
+    if (!Array.isArray(chords)) throw new TypeError('Progression must be an array');
+    const parsed = Array.from(chords, (c, index) => {
+      const name = typeof c === 'string' ? c : c?.kind === 'chord' ? c.name : null;
+      const chord = name === null ? null : this.parseChord(name);
+      if (!chord) throw new RangeError(`Unsupported chord at progression index ${index}`);
+      return chord;
+    });
+    return analyzeHarmony(parsed, options);
+  }
 }
 
 export { TEMPLATES as CHORD_TEMPLATES };

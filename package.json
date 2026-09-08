@@ -1,7 +1,7 @@
 {
   "name": "chordlens",
   "version": "1.0.0",
-  "description": "Chord detection for 88-key piano",
+  "description": "Explainable chord analysis, voicings, progressions for piano and MIDI notes",
   "author": "steph-dm",
   "license": "MIT",
   "repository": {
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "test": "node tests/regression.js && node --test tests/*.test.js",
-    "demo": "node demo.js"
+    "demo": "node examples/demo.js"
   },
   "keywords": [
     "music",
