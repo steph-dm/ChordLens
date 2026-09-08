@@ -20,7 +20,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node test.js",
+    "test": "node tests/regression.js && node --test tests/*.test.js",
     "demo": "node demo.js"
   },
   "keywords": [

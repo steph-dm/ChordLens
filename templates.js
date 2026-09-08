@@ -4,7 +4,9 @@
 // labels:    interval function names
 // weight:    common chords rank higher
 
-const TEMPLATES = [
+import { compileTemplates } from './template-utils.js';
+
+const DEFINITIONS = [
 
   { symbol: '5', fullName: 'Power Chord',
     intervals: [0, 7], required: [0, 7],
@@ -215,20 +217,34 @@ const TEMPLATES = [
   { symbol: '7#9b13', fullName: 'Dominant 7th Sharp 9 Flat 13',
     intervals: [0, 3, 4, 7, 8, 10], required: [0, 3, 4, 8, 10],
     labels: { 0: 'R', 3: '#9', 4: '3', 7: '5', 8: 'b13', 10: 'b7' }, weight: 40 },
+  { symbol: 'madd11', fullName: 'Minor Add 11',
+    intervals: [0, 3, 5, 7], required: [0, 3, 5, 7],
+    labels: { 0: 'R', 3: 'b3', 5: '11', 7: '5' }, weight: 64 },
+  { symbol: 'add#11', fullName: 'Major Add Sharp 11',
+    intervals: [0, 4, 6, 7], required: [0, 4, 6, 7],
+    labels: { 0: 'R', 4: '3', 6: '#11', 7: '5' }, weight: 62 },
+  { symbol: 'maj9#11', fullName: 'Major 9th Sharp 11',
+    intervals: [0, 2, 4, 6, 7, 11], required: [0, 2, 4, 6, 11],
+    labels: { 0: 'R', 2: '9', 4: '3', 6: '#11', 7: '5', 11: '7' }, weight: 44 },
+  { symbol: 'maj13#11', fullName: 'Major 13th Sharp 11',
+    intervals: [0, 2, 4, 6, 7, 9, 11], required: [0, 4, 6, 9, 11],
+    labels: { 0: 'R', 2: '9', 4: '3', 6: '#11', 7: '5', 9: '13', 11: '7' }, weight: 28 },
+  { symbol: '9#5', fullName: 'Dominant 9th Sharp 5',
+    intervals: [0, 2, 4, 8, 10], required: [0, 2, 4, 8, 10],
+    labels: { 0: 'R', 2: '9', 4: '3', 8: '#5', 10: 'b7' }, weight: 48 },
+  { symbol: '9b5', fullName: 'Dominant 9th Flat 5',
+    intervals: [0, 2, 4, 6, 10], required: [0, 2, 4, 6, 10],
+    labels: { 0: 'R', 2: '9', 4: '3', 6: 'b5', 10: 'b7' }, weight: 48 },
+  { symbol: 'maj9#5', fullName: 'Major 9th Sharp 5',
+    intervals: [0, 2, 4, 8, 11], required: [0, 2, 4, 8, 11],
+    labels: { 0: 'R', 2: '9', 4: '3', 8: '#5', 11: '7' }, weight: 44 },
+  { symbol: '7sus4b9', fullName: 'Dominant 7th Suspended 4th Flat 9',
+    intervals: [0, 1, 5, 7, 10], required: [0, 1, 5, 10],
+    labels: { 0: 'R', 1: 'b9', 5: '4', 7: '5', 10: 'b7' }, weight: 48 },
 ];
 
 
-// precompute bitmasks so matching is just bitwise AND, no loops
-for (const t of TEMPLATES) {
-  t._ivBits = 0;
-  for (const iv of t.intervals) t._ivBits |= 1 << iv;
-  t._reqBits = 0;
-  for (const iv of t.required) t._reqBits |= 1 << iv;
-  t._size = t.intervals.length;
-  t._sorted = [...t.intervals].sort((a, b) => a - b);
-  t._weightScore = Math.round(t.weight / 10);
-  // big chords lose less points for dropped tones
-  t._omitPenalty = t._size >= 6 ? 1 : t._size >= 5 ? 2 : 3;
-}
+const TEMPLATES = compileTemplates(DEFINITIONS);
 
 export { TEMPLATES };
+export { compileTemplate, compileTemplates } from './template-utils.js';
