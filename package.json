@@ -29,7 +29,13 @@
   },
   "scripts": {
     "test": "node tests/regression.js && node --test tests/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/*.test.js",
+    "test:browser": "node scripts/browser-check.js",
+    "test:package": "node scripts/package-check.js",
     "typecheck": "tsc -p tsconfig.types.json",
+    "check": "npm test && npm run typecheck && npm run test:package",
+    "prepublishOnly": "npm run check",
+    "benchmark": "node scripts/benchmark.js",
     "demo": "node examples/demo.js"
   },
   "keywords": [
@@ -40,6 +46,7 @@
     "harmony"
   ],
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "typescript": "7.0.2"
   }
 }
